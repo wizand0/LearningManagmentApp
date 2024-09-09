@@ -12,8 +12,12 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "course_table",foreignKeys = @ForeignKey(entity = Category.class,
-        parentColumns = "id", childColumns = "category_id", onDelete = CASCADE))
+import java.util.Objects;
+
+
+@Entity(tableName = "course_table", foreignKeys = @ForeignKey(entity = Category.class,
+        parentColumns = "id",childColumns = "category_id", onDelete = CASCADE))
+
 public class Course extends BaseObservable {
 
     @PrimaryKey(autoGenerate = true)
@@ -26,9 +30,9 @@ public class Course extends BaseObservable {
     @ColumnInfo(name = "unit_price")
     private String unitPrice;
 
-
     @ColumnInfo(name = "category_id")
     private int categoryId;
+
 
     @Ignore
     public Course() {
@@ -40,6 +44,7 @@ public class Course extends BaseObservable {
         this.unitPrice = unitPrice;
         this.categoryId = categoryId;
     }
+
 
     @Bindable
     public int getCourseId() {
@@ -60,7 +65,6 @@ public class Course extends BaseObservable {
     public void setCourseName(String courseName) {
         this.courseName = courseName;
         notifyPropertyChanged(BR.courseName);
-
     }
 
     @Bindable
@@ -71,7 +75,6 @@ public class Course extends BaseObservable {
     public void setUnitPrice(String unitPrice) {
         this.unitPrice = unitPrice;
         notifyPropertyChanged(BR.unitPrice);
-
     }
 
     @Bindable
@@ -82,6 +85,22 @@ public class Course extends BaseObservable {
     public void setCategoryId(int categoryId) {
         this.categoryId = categoryId;
         notifyPropertyChanged(BR.categoryId);
+    }
 
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Course course = (Course) o;
+        return  courseId == course.courseId
+                && categoryId == course.categoryId
+                && courseName.equals(course.courseName)
+                && unitPrice.equals(course.unitPrice);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(courseId, courseName, unitPrice, categoryId);
     }
 }
