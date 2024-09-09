@@ -13,7 +13,7 @@ import java.util.List;
 public interface CategoryDAO {
 
     @Insert
-    void insrt(Category category);
+    void insert(Category category);
 
     @Update
     void update(Category category);
